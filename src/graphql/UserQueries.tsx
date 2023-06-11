@@ -28,3 +28,37 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const DELETE_USER = gql`
+  mutation RemovePerson($removePersonId: String!) {
+    removePerson(id: $removePersonId) {
+      _id
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation UpdatePerson($updatePersonInput: UpdatePersonInput!) {
+    updatePerson(updatePersonInput: $updatePersonInput) {
+      _id
+      name
+      father
+      mother
+      email
+      mobile
+    }
+  }
+`;
+
+export const GET_ONE_USER = gql`
+  query PersonById($personByIdId: String!) {
+    personById(id: $personByIdId) {
+      _id
+      name
+      mother
+      father
+      email
+      mobile
+    }
+  }
+`;
