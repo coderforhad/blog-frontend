@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client/react";
 import { ALL_USER } from "@/graphql/UserQueries";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
+import { Typography } from "@mui/material";
 
 const columns = [
   { field: "_id", headerName: "ID", width: 150 },
@@ -28,6 +29,9 @@ const ListUser = () => {
 
   return (
     <Wrapper>
+      <Typography sx={{ margin: "10px" }} variant="h4">
+        User List
+      </Typography>
       <DataGrid columns={columns} rows={rowData} getRowId={(row) => row?._id} />
     </Wrapper>
   );

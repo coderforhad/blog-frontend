@@ -15,7 +15,7 @@ import { CREATE_USER } from "@/graphql/UserQueries";
 import { useRouter } from "next/router";
 
 const FormFillUp = () => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState<any>({});
   const [createSingleUser] = useMutation(CREATE_USER);
   const Router = useRouter();
   const handleChange = (e: any) => {

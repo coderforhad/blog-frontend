@@ -104,13 +104,11 @@ export default function Wrapper({ children }: any) {
     setOpen(false);
   };
 
-  const handleClick = (index) => {
-    if (index === 0) {
-      <Link href={"/"}></Link>;
-    }
-    if (index === 1) {
-      <Link href={"/list"}></Link>;
-    }
+  const handleClick = (text) => {
+    console.log("event :>> ", text);
+
+    text === "Add User" ? Router.push("/") : "";
+    text === "List User" ? Router.push("/list") : "";
   };
 
   return (
@@ -147,30 +145,29 @@ export default function Wrapper({ children }: any) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Add User", "List User", "Send email", "Drafts"].map(
-            (text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
+          {["Add User", "List User"].map((text, index) => (
+            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                onClick={() => handleClick(text)}
+              >
+                <ListItemIcon
                   sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            )
-          )}
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
         <Divider />
         <List>
