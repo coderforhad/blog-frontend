@@ -17,6 +17,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import BallotIcon from "@mui/icons-material/Ballot";
+import InputIcon from "@mui/icons-material/Input";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import MailIcon from "@mui/icons-material/Mail";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -109,6 +112,7 @@ export default function Wrapper({ children }: any) {
 
     text === "Add User" ? Router.push("/") : "";
     text === "List User" ? Router.push("/list") : "";
+    text === "Upload File" ? Router.push("/upload-file") : "";
   };
 
   return (
@@ -145,7 +149,7 @@ export default function Wrapper({ children }: any) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Add User", "List User"].map((text, index) => (
+          {["Add User", "List User", "Upload File"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -162,14 +166,20 @@ export default function Wrapper({ children }: any) {
                     justifyContent: "center",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 ? (
+                    <InputIcon />
+                  ) : index === 1 ? (
+                    <BallotIcon />
+                  ) : (
+                    <CloudUploadIcon />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-        <Divider />
+        {/* <Divider />
         <List>
           {["All mail", "Trash", "Spam"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
@@ -193,7 +203,7 @@ export default function Wrapper({ children }: any) {
               </ListItemButton>
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
