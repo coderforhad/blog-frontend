@@ -19,7 +19,7 @@ const columns: GridColDef[] = [
     sortable: false,
     renderCell: (params) => {
       const [removeUser] = useMutation(DELETE_USER);
-      const onClick = (e) => {
+      const onClick = (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
         console.log("parems :>> ", params.id);
         try {
@@ -44,7 +44,7 @@ const columns: GridColDef[] = [
     sortable: false,
     renderCell: (params) => {
       const Router = useRouter();
-      const onClick = (e) => {
+      const onClick = (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
         Router.push({
           pathname: "/edit",

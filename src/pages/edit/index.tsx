@@ -39,7 +39,7 @@ const EditPerson = () => {
   const [updateSingleUser] = useMutation(UPDATE_USER);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
@@ -59,7 +59,6 @@ const EditPerson = () => {
       },
     }).then(() => Router.push("/list"));
   };
-  console.log("Router.query :>> ", state);
 
   if (loading) {
     return <TextField value="Loading..." />;
