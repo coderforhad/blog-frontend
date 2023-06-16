@@ -62,3 +62,9 @@ export const GET_ONE_USER = gql`
     }
   }
 `;
+
+export const FILE_UPLOAD = gql`
+  mutation SingleUpload($file: Upload!) {
+   singleUpload(file: $file)
+  }
+`
