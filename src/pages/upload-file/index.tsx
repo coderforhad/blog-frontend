@@ -1,12 +1,14 @@
 import Wrapper from "@/components/Wrapper";
-import { useState, useRef } from "react";
+import { Button } from "@mui/material";
+import { useState } from "react";
 import styles from "../../styles/global.module.css";
+import { FILE_UPLOAD } from "@/graphql/UserQueries";
+import { useMutation } from "@apollo/client";
 
 const UploadFile = () => {
   const [dragActive, setDragActive] = useState(false);
   const [uploadFile, setUploadFile] = useState<any>([]);
-  // ref
-  const inputRef = useRef<any>(null);
+  const [uploadImage] = useMutation(FILE_UPLOAD);
 
   // handle drag events
   const handleDrag = (e: any) => {
@@ -39,9 +41,14 @@ const UploadFile = () => {
     }
   };
 
-  // triggers the input when the button is clicked
-  const onButtonClick = () => {
-    inputRef.current.click();
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    uploadImage({
+      variables: {
+        file: uploadFile[0],
+      },
+    });
+    console.log("submited", uploadFile[0]);
   };
   return (
     <Wrapper>
@@ -49,10 +56,9 @@ const UploadFile = () => {
         <form
           className={styles.formfileupload}
           onDragEnter={handleDrag}
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSubmit}
         >
           <input
-            ref={inputRef}
             type="file"
             className={styles.inputfileupload}
             multiple={true}
@@ -66,12 +72,9 @@ const UploadFile = () => {
           >
             <div>
               <p>Drag and drop your file here or</p>
-              <button className={styles.uploadbutton} onClick={onButtonClick}>
-                Upload a file
-              </button>
+              <p>File Name: {uploadFile[0]?.name}</p>
             </div>
           </label>
-          <p>File Name: {uploadFile[0]?.name}</p>
           {dragActive && (
             <div
               className={styles.dragfileelement}
@@ -81,6 +84,9 @@ const UploadFile = () => {
               onDrop={handleDrop}
             ></div>
           )}
+          <Button type="submit" variant="contained" sx={{ margin: "20px" }}>
+            Upload
+          </Button>
         </form>
       </div>
     </Wrapper>
