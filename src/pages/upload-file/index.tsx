@@ -1,10 +1,13 @@
 import Wrapper from "@/components/Wrapper";
 import { useState, useRef } from "react";
 import styles from "../../styles/global.module.css";
+import { UPLOAD_IMAGE } from "@/graphql/UserQueries";
+import { useMutation } from "@apollo/client";
 
 const UploadFile = () => {
   const [dragActive, setDragActive] = useState(false);
   const [uploadFile, setUploadFile] = useState<any>([]);
+  const [uploadImage] = useMutation(UPLOAD_IMAGE);
   // ref
   const inputRef = useRef<any>(null);
 
@@ -43,13 +46,23 @@ const UploadFile = () => {
   const onButtonClick = () => {
     inputRef.current.click();
   };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log('object :>> ', uploadFile);
+    uploadImage({
+      variables: {
+        file: uploadFile[0],
+      },
+    });
+  };
   return (
     <Wrapper>
       <div className={styles.page}>
         <form
           className={styles.formfileupload}
           onDragEnter={handleDrag}
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSubmit}
         >
           <input
             ref={inputRef}
@@ -81,6 +94,7 @@ const UploadFile = () => {
               onDrop={handleDrop}
             ></div>
           )}
+          <button type="submit">Submit</button>
         </form>
       </div>
     </Wrapper>
