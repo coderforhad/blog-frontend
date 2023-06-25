@@ -1,5 +1,6 @@
 import Wrapper from "@/components/Wrapper";
-import { useState, useRef } from "react";
+import { Button } from "@mui/material";
+import {  useState } from "react";
 import styles from "../../styles/global.module.css";
 import { UPLOAD_IMAGE } from "@/graphql/UserQueries";
 import { useMutation } from "@apollo/client";
@@ -8,8 +9,7 @@ const UploadFile = () => {
   const [dragActive, setDragActive] = useState(false);
   const [uploadFile, setUploadFile] = useState<any>([]);
   const [uploadImage] = useMutation(UPLOAD_IMAGE);
-  // ref
-  const inputRef = useRef<any>(null);
+
 
   // handle drag events
   const handleDrag = (e: any) => {
@@ -42,11 +42,6 @@ const UploadFile = () => {
     }
   };
 
-  // triggers the input when the button is clicked
-  const onButtonClick = () => {
-    inputRef.current.click();
-  };
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log('object :>> ', uploadFile);
@@ -65,7 +60,6 @@ const UploadFile = () => {
           onSubmit={handleSubmit}
         >
           <input
-            ref={inputRef}
             type="file"
             className={styles.inputfileupload}
             multiple={true}
@@ -79,12 +73,9 @@ const UploadFile = () => {
           >
             <div>
               <p>Drag and drop your file here or</p>
-              <button className={styles.uploadbutton} onClick={onButtonClick}>
-                Upload a file
-              </button>
+              <p>File Name: {uploadFile[0]?.name}</p>
             </div>
           </label>
-          <p>File Name: {uploadFile[0]?.name}</p>
           {dragActive && (
             <div
               className={styles.dragfileelement}
